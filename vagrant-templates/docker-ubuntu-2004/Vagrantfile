@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "geerlingguy/ubuntu2004"
+  config.vm.network :private_network, ip: "192.168.56.100"
+  config.vm.network "forwarded_port", guest: 9443, host: 9444
+  config.ssh.insert_key = false
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  config.vm.provider :virtualbox do |v|
+    v.memory = 1024
+    v.cpus = "1"
+  end
+
+  config.vm.provision "docker" do |d|
+    d.run "portainer/portainer-ce:latest",
+        args: "-p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data"
+  end
+
+end
