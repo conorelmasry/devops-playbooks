@@ -1,6 +1,7 @@
 resource "proxmox_vm_qemu" "cloudinit-example" {
+  count       = 1
   vmid        = 1000
-  name        = "test-terraform0"
+  name        = format("%s%s", var.hostname,count.index)
   target_node = "macmini"
   agent       = 1
   cores       = 2
@@ -17,8 +18,8 @@ resource "proxmox_vm_qemu" "cloudinit-example" {
   nameserver = var.dns
   ipconfig0  = var.ipconfig
   skip_ipv6  = true
-  #ciuser     = "root" # leave as default
-  #cipassword = "Enter123!"
+  ciuser     = var.ciuser
+  cipassword = var.cipassword
   sshkeys    = var.ssh_key
   # Most cloud-init images require a serial device for their display
   serial {
@@ -61,7 +62,7 @@ terraform {
   }
 }
 provider "proxmox" {
-  pm_api_url = "https://macmini.home:8006/api2/json"
+  pm_api_url = var.pve_host_url
 
   pm_api_token_id = var.pm_api_token_id
 
