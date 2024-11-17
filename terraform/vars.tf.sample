@@ -1,0 +1,39 @@
+variable "pve_host_url" {
+    default = "https://hostname:8006/api2/json"
+}
+
+variable "template_name" {
+    default = "name of template on host"
+}
+
+variable "pm_api_token_id" {
+    default = "full api token name"
+}
+
+variable "pm_api_token_secret" {
+    default = "full api token string"
+}
+
+variable "hostname" {
+    default = "base hostname (count will be appended)"
+}
+
+variable "dns" {
+    default = "dns server ip"
+}
+
+variable "ipconfig" {
+    default = "ip config rules" 
+}
+
+variable "ciuser" {
+    default = "default user name"
+}
+
+variable "cipassword" {
+    default = "default user password"
+}
+
+variable "ssh_key" {
+    default = "contents of ssh public key for the default user"
+}

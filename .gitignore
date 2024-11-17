@@ -1,1 +1,7 @@
 .vagrant
+.terraform*
+private_key
+vars.tf
+terraform.*
+ansible.cfg
+hosts.ini

@@ -1,0 +1,6 @@
+Host terraform
+  HostName 192.168.0.161
+  User ubuntu
+  IdentityFile private_key
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
