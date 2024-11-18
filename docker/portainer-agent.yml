@@ -9,12 +9,12 @@
         name: "portainer/agent:2.19.5"
         source: pull
 
-    - name: Create Portainer volume
+    - name: Create Portainer Agent volume
       community.docker.docker_volume:
         name: portainer_data
         state: present
       
-    - name: Create Portainer container
+    - name: Create Portainer Agent container
       community.docker.docker_container:
         name: "portainer_agent"
         image: "portainer/agent:2.19.5"
