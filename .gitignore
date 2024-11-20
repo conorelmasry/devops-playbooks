@@ -5,3 +5,4 @@ vars.tf
 terraform.*
 ansible.cfg
 hosts.ini
+hosts.yml
