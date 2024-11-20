@@ -1,0 +1,6 @@
+# Hosts file Yaml
+host:
+  {Name of Group}:
+    {FQDN of host}:
+       ansible_host: {IP of Host}
+       {other_variables}: {variable_value}
