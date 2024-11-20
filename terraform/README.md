@@ -1,4 +1,4 @@
-# ansible-playbooks/terraform
+# devops-playbooks/terraform
 A guide/reminder for setting up Terraform to provision VMs on a Proxmox host.
 Included details to help setting up ansible.
 

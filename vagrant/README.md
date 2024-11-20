@@ -1,4 +1,4 @@
-# ansible-playbooks/vagrant
+# devops-playbooks/vagrant
 A guide/reminder for provisioning custom Vagrant boxes, and deploying them using Vagrantfiles
 
 ## Preparing the box
