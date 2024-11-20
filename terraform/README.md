@@ -30,6 +30,7 @@ Included details to help setting up ansible.
         --run-command "apt-get update" \
         --run-command "apt-get install cloud-init/testing -y"
         ```
+
 3. Prepare the template
     - Create the VM (which will later be converted)
         ```
@@ -64,3 +65,24 @@ Included details to help setting up ansible.
         sudo qm template 9000
         ```
     
+## Deploying an instance
+To use this template, the following files are required:
+- `vars.tf` using the variables from [vars.tf.sample](vars.tf.sample)
+
+For ansible to work, the following additional files are required:
+- `ansible.cfg` using the template [ansible.cfg.sample](../ansible.cfg.sample)
+- A single hosts file, in one of the following formats:
+    - `hosts.ini` using the template [hosts.ini.sample](../hosts.ini.sample)
+    -  `hosts.yml` using the template [hosts.yml.sample](../hosts.yml.sample)
+- A public/private keypair:
+    - The private key must be referenced in `ansible.cfg`
+    - The contents of the public key must be added to `vars.tf`
+
+Optional additional files:
+- A config file, to simplify ssh access:
+    - See [config.sample](../config.sample)
+
+## Ready to Deploy?
+The VM can now be deployed using the following steps.
+1. `terraform plan` - This will confirm the changes that are about to be made by terraform.
+2. `terraform apply` - This will apply the changes.
