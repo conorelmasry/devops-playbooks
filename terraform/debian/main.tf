@@ -1,6 +1,6 @@
 resource "proxmox_vm_qemu" "cloudinit-example" {
   count       = 1
-  vmid        = 1001
+  vmid        = 1001+count.index
   name        = format("%s%s", var.hostname,count.index)
   target_node = "macmini"
   agent       = 1
@@ -16,7 +16,7 @@ resource "proxmox_vm_qemu" "cloudinit-example" {
   #cicustom   = "vendor=local:snippets/qemu-guest-agent.yml" # /var/lib/vz/snippets/qemu-guest-agent.yml
   ciupgrade  = true
   #nameserver = var.dns
-  ipconfig0  = "ip=192.168.0.16${count.index}/32,gw=192.168.0.1" # increment ip from 192.168.0.161
+  ipconfig0  = "ip=192.168.0.${count.index+161}/32,gw=192.168.0.1" # increment ip from 192.168.0.161
   skip_ipv6  = true
   ciuser     = var.ciuser
   cipassword = var.cipassword
