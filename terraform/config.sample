@@ -1,6 +1,0 @@
-Host terraform0
-  HostName {ip address of VM}
-  User {default user}
-  IdentityFile {private_key for ssh}
-  UserKnownHostsFile /dev/null
-  StrictHostKeyChecking no
