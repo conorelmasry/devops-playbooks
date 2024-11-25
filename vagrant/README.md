@@ -51,9 +51,37 @@ A guide/reminder for provisioning custom Vagrant boxes, and deploying them using
     - Ensure the VM is shut down before continuing
     - Create the "package.box" file which will hold the box
         - Create a folder to store the box file
-        - Run `vagrant package --base {vm-name}`
-    - Add the box by running `vagrant box add {your-name/box-name} package.box`
-    - Test the box
-        - `vagrant init {your-name/box-name}`
-        - `vagrant up`
-        - `vagrant ssh`
+        - Run `vagrant package --base {vm-name} --output {box-location}`
+4. Create a metadata file
+    - The metadata containing versioning information is stored as a simple json file.
+    - It should begin with the following information:
+    ```
+    {
+        "description": "Title of the Vagrant Box",
+        "short_description": "Description of the Vagrant box",
+        "name": "boxOwner/boxName",
+        "versions": []
+    }
+    ```
+    - Inside the "versions" block, the first entry can be added as follows:
+    ```
+    {
+        "version": "1.0",
+        "release_date": "dd-MMM-YYYY",
+        "providers": [
+            {
+            "name": "virtualbox",
+            "url": "file:///full/path/to/box",
+            "checksum": "2d16e.....61ff3",
+            "checksum_type": "sha256"
+            }
+        ]
+    }
+    ```
+    - Each subsequent update to the box will require a new version block being added.
+5. Test the box
+    - Create a minimal vagrant file that references both:
+        - `config.vm.box = "boxOwner/boxName"`
+        - `config.vm.box_url = "file://box-metadata.json`
+    - Run `vagrant up` to bring up the box, and add it to your local boxes.
+    - At this point you can test the VM to ensure the box looks correct.
