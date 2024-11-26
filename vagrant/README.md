@@ -73,13 +73,16 @@ A guide/reminder for provisioning custom Vagrant boxes, and deploying them using
             "name": "virtualbox",
             "url": "file:///full/path/to/box",
             "checksum": "2d16e.....61ff3",
-            "checksum_type": "sha256"
+            "checksum_type": "sha256",
+            "architecture": "amd64"
             }
         ]
     }
     ```
     - Each subsequent update to the box will require a new version block being added.
+    - The version block can also be added by running the [update-metadata.py](update-metadata.py) script.
 5. Test the box
+    - If the box has been updated from a previous version, run `vagrant box update`
     - Create a minimal vagrant file that references both:
         - `config.vm.box = "boxOwner/boxName"`
         - `config.vm.box_url = "file://box-metadata.json`
