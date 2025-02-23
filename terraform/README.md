@@ -15,12 +15,12 @@ Included details to help setting up ansible.
 2. Update the image using "virt-customize".
     - Install the prerequisites on the host (first time only)
         ```
-        sudo apt update -y
-        sudo apt install libguestfs-tools -y
+        apt update -y
+        apt install libguestfs-tools -y
         ```
     - Install applications to the image
         ```
-        sudo virt-customize -a {image-name} --install {application-name}
+        virt-customize -a {image-name} --install {application-name}
         ```
     - **Required for Debian** - Apply networking fix
         ```
@@ -34,35 +34,35 @@ Included details to help setting up ansible.
 3. Prepare the template
     - Create the VM (which will later be converted)
         ```
-        sudo qm create 9000 --name "{template-name}" --memory 2048 --cores 2 --net0 virtio,bridge=vmbr0
+        qm create {template-number} --name "{template-name}" --memory 2048 --cores 2 --net0 virtio,bridge=vmbr0
         ```
     - Import the disk
         ```
-        sudo qm importdisk 9000 {image-name} local-lvm
+        qm importdisk {template-number} {image-name} local-lvm
         ```
     - Prepare the interface
         ```
-        sudo qm set 9000 --scsihw virtio-scsi-pci --scsi0 local-zfs:vm-9000-disk-0
+        qm set {template-number} --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-{template-number}-disk-0
         ```
     - Set the boot disk
         ```
-        sudo qm set 9000 --boot c --bootdisk scsi0
+        qm set {template-number} --boot c --bootdisk scsi0
         ```
     - Add the cloud-init disk
         ```
-        sudo qm set 9000 --ide2 local-zfs:cloudinit
+        qm set {template-number} --ide2 local-lvm:cloudinit
         ```
     - Add a serial display output
         ```
-        sudo qm set 9000 --serial0 socket --vga serial0
+        qm set {template-number} --serial0 socket --vga serial0
         ```
     - *Optional* - Enable the agent
         ```
-        sudo qm set 9000 --agent enabled=1
+        qm set {template-number} --agent enabled=1
         ```
     - Convert the VM to a template
         ```
-        sudo qm template 9000
+        qm template {template-number}
         ```
     
 ## Deploying an instance
