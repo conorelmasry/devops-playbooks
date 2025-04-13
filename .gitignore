@@ -7,3 +7,6 @@ ansible.cfg
 hosts.ini
 hosts.yml
 config
+*.key
+fah
+ssh-keys

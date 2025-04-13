@@ -1,0 +1,48 @@
+---
+- name: First time setup on Oracle Cloud Infrastructure
+  hosts: all
+  become: True
+
+  tasks:
+  
+    - name: Updating the system
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+    - name: Upgrading the system
+      apt: upgrade=dist force_apt_get=yes
+
+    - name: Installing aptitude using apt
+      apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+    
+    - name: Installing required system packages
+      apt: name={{ item }} state=latest update_cache=yes
+      loop: [ 'wireguard', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools', 'python3-apt', 'python3-debian']
+    
+    - block:
+      - name: Install FastFetch on Ubuntu
+        ansible.builtin.deb822_repository:
+          name: fastfetch-ubuntu-ppa
+          state: present
+          types: [deb]
+          uris: "https://ppa.launchpadcontent.net/zhangsongcui3371/fastfetch/ubuntu/"
+          suites: ["{{ ansible_distribution_release|lower }}"]
+          components: [main]
+          signed_by: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xeb65ee19d802f3eb1a13cfe47e2e5cb4d4865f21"
+          enabled: yes
+
+      - name: Updating the system
+        apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+      - name: Upgrading the system
+        apt: upgrade=dist force_apt_get=yes
+
+      - name: Install FastFetch
+        apt: name=fastfetch state=latest update_cache=yes
+      when: ansible_facts['distribution'] == "Ubuntu"
+    
+    - name: Install FastFetch on Debian 13
+      apt: name=fastfetch state=latest update_cache=yes
+
+      when: 
+        - ansible_facts['distribution'] == "Debian"
+        - ansible_facts['distribution_major_version'] == "13"
