@@ -1,0 +1,25 @@
+alias cls=clear
+alias ll=longlist
+function longlist()
+{
+echo "rwx             chmod   files   owner   group   size    modified date           file name"
+stat --printf='%A\t%a\t%h\t%U\t%G\t%s\t%.19y\t%n\n' * | numfmt --to=iec-i --field=6 --delimiter="	" --suffix=B
+}
+
+alias lla=longlistall
+function longlistall()
+{
+echo "rwx             chmod   files   owner   group   size    modified date           file name"
+stat --printf='%A\t%a\t%h\t%U\t%G\t%s\t%.19y\t%n\n' .* * | numfmt --to=iec-i --field=6 --delimiter="	" --suffix=B
+}
+
+alias lls=longlistsearch
+function longlistsearch()
+{
+echo "rwx             chmod   files   owner   group   size    modified date           file name";
+stat --printf='%A\t%a\t%h\t%U\t%G\t%s\t%.19y\t%n\n' $@ | numfmt --to=iec-i --field=6 --delimiter="	" --suffix=B;
+}
+
+
+alias docker-ps="docker ps -a --format 'table {{.Names}}\t {{.Image}}\t {{.Status}}'"
+alias dockerps=docker-ps

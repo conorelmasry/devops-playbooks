@@ -10,3 +10,4 @@ config
 *.key
 fah
 ssh-keys
+tf_plan

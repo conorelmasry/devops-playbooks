@@ -46,3 +46,13 @@
       when: 
         - ansible_facts['distribution'] == "Debian"
         - ansible_facts['distribution_major_version'] == "13"
+    
+    - name: Add Case-insensitive autocompletion
+      ansible.builtin.lineinfile:
+        path: /home/{{ ansible_user }}/.bashrc
+        line: bind -s 'set completion-ignore-case on'
+        create: yes
+    
+    - name: Copying bash_aliases File
+      copy: src=./bash_aliases dest=/home/{{ ansible_user }}/.bash_aliases
+    
